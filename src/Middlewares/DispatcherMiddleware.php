@@ -1,0 +1,53 @@
+<?php
+
+namespace Framework\Middlewares;
+
+use GuzzleHttp\Psr7\Response;
+use Hypario\Route;
+use Psr\Container\ContainerInterface;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\ServerRequestInterface;
+use Psr\Http\Server\MiddlewareInterface;
+use Psr\Http\Server\RequestHandlerInterface;
+
+class DispatcherMiddleware implements MiddlewareInterface
+{
+
+    /**
+     * @var ContainerInterface
+     */
+    private $container;
+
+    public function __construct(ContainerInterface $container)
+    {
+        $this->container = $container;
+    }
+
+    /**
+     * Process an incoming server request.
+     *
+     * Processes an incoming server request in order to produce a response.
+     * If unable to produce the response itself, it may delegate to the provided
+     * request handler to do so.
+     */
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
+        // get the matched route from the RouterMiddleware
+        $route = $request->getAttribute(Route::class);
+        if (is_null($route)) {
+            return $handler->handle($request);
+        }
+
+        // get the handler from the route
+        /** @var Route $route */
+        $callback = $this->container->get($route->getHandler());
+        if (is_callable($callback)) {
+            $response = $callback($request);
+            if (is_string($response)) {
+                return new Response(200, [], $response);
+            }
+            return $response;
+        }
+        return $handler->handle($request);
+    }
+}
