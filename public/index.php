@@ -11,9 +11,8 @@ define('ROOT', dirname(__DIR__));
 
 require ROOT . '/vendor/autoload.php';
 
-$app = new App(ROOT . '/config/config.php');
-
-require ROOT . '/config/routes.php';
+$app = (new App(ROOT . '/config/config.php'));
+    //->addModule(\App\WelcomeModule\WelcomeModule::class);
 
 $app
     ->pipe(RouterMiddleware::class)

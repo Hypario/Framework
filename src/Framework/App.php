@@ -2,7 +2,6 @@
 
 namespace Framework;
 
-use GuzzleHttp\Psr7\Response;
 use Hypario\Builder;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -15,7 +14,12 @@ class App implements RequestHandlerInterface
 
     private $definitions;
 
+    /**
+     * @var ContainerInterface
+     */
     private $container;
+
+    private $modules = [];
 
     /**
      * Array of middlewares
@@ -31,6 +35,12 @@ class App implements RequestHandlerInterface
     public function __construct(string $definitions)
     {
         $this->definitions = $definitions;
+    }
+
+    public function addModule(string $module): self
+    {
+        $this->modules[] = $module;
+        return $this;
     }
 
     public function pipe(string $middleware): self
@@ -50,7 +60,7 @@ class App implements RequestHandlerInterface
 
     private function getMiddleware(): MiddlewareInterface
     {
-        $middleware = $this->container->get($this->middlewares[$this->index]);
+        $middleware = $this->getContainer()->get($this->middlewares[$this->index]);
         ++$this->index;
 
         return $middleware;
@@ -65,6 +75,12 @@ class App implements RequestHandlerInterface
      */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
+        // instantiate all the modules
+        foreach($this->modules as $module) {
+            $this->getContainer()->get($module);
+        }
+
+        // go throught all the middlewares
         $middleware = $this->getMiddleware();
         return $middleware->process($request, $this);
     }

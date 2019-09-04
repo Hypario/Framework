@@ -2,14 +2,22 @@
 
 namespace Framework\Renderer;
 
-use Renderer\RendererInterface;
-
 class PHPRenderer implements RendererInterface
 {
-    const DEFAULT__NAMESPACE = '__MAIN';
 
-    private $paths = [];
+    /**
+     * @var string
+     */
+    private $defaultPath;
 
+    /**
+     * @var string[string]
+     */
+    private $namespacedPaths = [];
+
+    /**
+     * @var array
+     */
     private $globals = [];
 
     public function __construct(?string $defaultPath = null)
@@ -26,18 +34,18 @@ class PHPRenderer implements RendererInterface
      * @param $namespace
      * @return mixed
      */
-    public function addPath(string $path, $namespace)
+    public function addPath(string $path, $namespace = null)
     {
-        if (is_null($path)) {
-            $this->paths[self::DEFAULT__NAMESPACE] = $namespace;
+        if (is_null($namespace)) {
+            $this->defaultPath = $path;
         } else {
-            $this->paths[$namespace] = $path;
+            $this->namespacedPaths[$namespace] = $path;
         }
     }
 
     /**
      * Allow to render a vue
-     * The path can be prezcised with namespaces added via addPath()
+     * The path can be precised with namespaces added via addPath()
      * We create a namespace by adding a @ in front of the string and end with a /
      * Examples :
      *
@@ -53,7 +61,7 @@ class PHPRenderer implements RendererInterface
         if ($this->hasNamespace($view)) {
             $path = $this->replaceNamespace($view) . '.php';
         } else {
-            $path = $this->paths[self::DEFAULT__NAMESPACE] . DIRECTORY_SEPARATOR . $view . '.php';
+            $path = $this->defaultPath . DIRECTORY_SEPARATOR . $view . '.php';
         }
         ob_start();
         $renderer = $this;
@@ -86,6 +94,6 @@ class PHPRenderer implements RendererInterface
     private function replaceNamespace(string $view): string
     {
         $namespace = $this->getNamespace($view);
-        return str_replace('@' . $namespace, $this->paths[$namespace], $view);
+        return str_replace('@' . $namespace, $this->namespacedPaths[$namespace], $view);
     }
 }
