@@ -1,5 +1,6 @@
 <?php
 
+use App\WelcomeModule\WelcomeModule;
 use Framework\App;
 use Framework\Middlewares\DispatcherMiddleware;
 use Framework\Middlewares\RouterMiddleware;
@@ -11,8 +12,8 @@ define('ROOT', dirname(__DIR__));
 
 require ROOT . '/vendor/autoload.php';
 
-$app = (new App(ROOT . '/config/config.php'));
-    //->addModule(\App\WelcomeModule\WelcomeModule::class);
+$app = (new App(ROOT . '/config/config.php'))
+    ->addModule(WelcomeModule::class);
 
 $app
     ->pipe(RouterMiddleware::class)
