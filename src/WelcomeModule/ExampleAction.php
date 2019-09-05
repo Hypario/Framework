@@ -25,6 +25,6 @@ class ExampleAction implements ActionInterface
      */
     public function __invoke(ServerRequestInterface $request)
     {
-        return $this->renderer->render('index');
+        return $this->renderer->render('@welcome/index');
     }
 }
