@@ -2,6 +2,8 @@
 
 namespace Framework;
 
+use Framework\Middlewares\CombinedMiddleware;
+use Framework\Middlewares\RoutePrefixedMiddleware;
 use Hypario\Builder;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
@@ -19,6 +21,10 @@ class App implements RequestHandlerInterface
      */
     private $container;
 
+    /**
+     * Array of modules
+     * @var string[]
+     */
     private $modules = [];
 
     /**
@@ -26,11 +32,6 @@ class App implements RequestHandlerInterface
      * @var MiddlewareInterface[]
      */
     private $middlewares = [];
-
-    /**
-     * @var int
-     */
-    private $index = 0;
 
     public function __construct(string $definitions)
     {
@@ -43,9 +44,13 @@ class App implements RequestHandlerInterface
         return $this;
     }
 
-    public function pipe(string $middleware): self
+    public function pipe(string $middleware, string $routePrefix = null): self
     {
-        $this->middlewares[] = $middleware;
+        if (is_null($routePrefix)) {
+            $this->middlewares[] = $middleware;
+        } else {
+            $this->middlewares[] = new RoutePrefixedMiddleware($this->getContainer(), $routePrefix, $middleware);
+        }
         return $this;
     }
 
@@ -56,14 +61,6 @@ class App implements RequestHandlerInterface
             $this->container = $builder->build();
         }
         return $this->container;
-    }
-
-    private function getMiddleware(): MiddlewareInterface
-    {
-        $middleware = $this->getContainer()->get($this->middlewares[$this->index]);
-        ++$this->index;
-
-        return $middleware;
     }
 
     /**
@@ -80,8 +77,7 @@ class App implements RequestHandlerInterface
             $this->getContainer()->get($module);
         }
 
-        // go throught all the middlewares
-        $middleware = $this->getMiddleware();
+        $middleware = new CombinedMiddleware($this->getContainer(), $this->middlewares);
         return $middleware->process($request, $this);
     }
 }

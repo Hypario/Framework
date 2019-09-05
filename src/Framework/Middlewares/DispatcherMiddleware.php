@@ -39,15 +39,13 @@ class DispatcherMiddleware implements MiddlewareInterface
         }
 
         // get the handler from the route
-        /** @var Route $route */
-        $callback = $this->container->get($route->getHandler());
-        if (is_callable($callback)) {
-            $response = $callback($request);
-            if (is_string($response)) {
-                return new Response(200, [], $response);
-            }
-            return $response;
+        $callback = $route->getHandler();
+        if (!is_array($callback)) {
+            $callback = [$callback];
         }
-        return $handler->handle($request);
+
+        // go throught all the middlewares specified in the route
+        // and the module at the end
+        return (new CombinedMiddleware($this->container, $callback))->process($request, $handler);
     }
 }
