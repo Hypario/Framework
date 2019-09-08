@@ -16,7 +16,8 @@
         "http-interop/response-sender": "^1.0",
         "guzzlehttp/psr7": "^1.6",
         "hypario/router": "^1.3",
-        "hypario/container": "^1.1",
-        "psr/http-server-middleware": "^1.0"
+        "hypario/container": "^1.0",
+        "psr/http-server-middleware": "^1.0",
+        "middlewares/whoops": "^1.2"
     }
 }

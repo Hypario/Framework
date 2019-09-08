@@ -2,11 +2,15 @@
 
 use App\WelcomeModule\WelcomeModule;
 use Framework\App;
-use Framework\Middlewares\DispatcherMiddleware;
-use Framework\Middlewares\RouterMiddleware;
+use Framework\Middlewares\{
+    CsrfMiddleware,
+    DispatcherMiddleware,
+    MethodMiddleware,
+    RouterMiddleware,
+    NotFoundMiddleware};
 use GuzzleHttp\Psr7\ServerRequest;
 use function Http\Response\send;
-use Framework\Middlewares\NotFoundMiddleware;
+use Middlewares\Whoops;
 
 define('ROOT', dirname(__DIR__));
 
@@ -16,6 +20,8 @@ $app = (new App(ROOT . '/config/config.php'))
     ->addModule(WelcomeModule::class);
 
 $app
+    ->pipe(MethodMiddleware::class)
+    ->pipe(CsrfMiddleware::class)
     ->pipe(RouterMiddleware::class)
     ->pipe(DispatcherMiddleware::class)
     ->pipe(NotFoundMiddleware::class);
