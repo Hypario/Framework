@@ -10,7 +10,6 @@ interface RendererInterface
      *
      * @param string $path
      * @param $namespace
-     * @return mixed
      */
     public function addPath(string $path, $namespace);
 
