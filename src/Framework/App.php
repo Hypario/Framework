@@ -58,6 +58,11 @@ class App implements RequestHandlerInterface
         if (is_null($this->container)) {
             $builder = new Builder();
             $builder->addDefinitions($this->definitions);
+            foreach ($this->getModules() as $module) {
+                if ($module::DEFINITIONS) {
+                    $builder->addDefinitions($module::DEFINITIONS);
+                }
+            }
             $this->container = $builder->build();
         }
         return $this->container;
@@ -79,5 +84,21 @@ class App implements RequestHandlerInterface
 
         $middleware = new CombinedMiddleware($this->getContainer(), $this->middlewares);
         return $middleware->process($request, $this);
+    }
+
+    /**
+     * @return string[]
+     */
+    public function getModules(): array
+    {
+        return $this->modules;
+    }
+
+    /**
+     * @return MiddlewareInterface[]
+     */
+    public function getMiddlewares(): array
+    {
+        return $this->middlewares;
     }
 }

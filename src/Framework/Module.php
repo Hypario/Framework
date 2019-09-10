@@ -2,9 +2,6 @@
 
 namespace Framework;
 
-
-use Framework\WelcomeModule\ExampleAction;
-
 class Module
 {
 
@@ -12,18 +9,18 @@ class Module
      * Path to the definitions for the container
      * @var string
      */
-    protected const DEFINITIONS = null;
+    public const DEFINITIONS = null;
 
     /**
-     * Path to the migrations for Phinx (not implemented)
+     * Path to the migrations for Phinx
      * @var string
      */
-    protected const MIGRATIONS = null;
+    public const MIGRATIONS = null;
 
     /**
-     * Path to the seeds for Phinx (not implemented)
+     * Path to the seeds for Phinx
      */
-    protected const SEEDS = null;
+    public const SEEDS = null;
 
     /**
      * The constructor is where you define all the routes and the view directory
