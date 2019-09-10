@@ -12,6 +12,7 @@ class WelcomeModule extends Module
     /**
      * WelcomeModule constructor.
      * @param Router $router
+     * @param RendererInterface $renderer
      */
     public function __construct(Router $router, RendererInterface $renderer)
     {
