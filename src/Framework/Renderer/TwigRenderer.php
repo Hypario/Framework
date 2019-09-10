@@ -30,7 +30,7 @@ class TwigRenderer implements RendererInterface
 
     /**
      * Allow to render a vue
-     * The path can be prezcised with namespaces added via addPath()
+     * The path can be precised with namespaces added via addPath()
      * We create a namespace by adding a @ in front of the string and end with a /
      * Examples :
      *

@@ -2,8 +2,7 @@
 
 use App\WelcomeModule\WelcomeModule;
 use Framework\App;
-use Framework\Middlewares\{
-    CsrfMiddleware,
+use Framework\Middlewares\{CsrfMiddleware,
     DispatcherMiddleware,
     MethodMiddleware,
     RouterMiddleware,
@@ -20,6 +19,7 @@ $app = (new App(ROOT . '/config/config.php'))
     ->addModule(WelcomeModule::class);
 
 $app
+    ->pipe(Whoops::class)
     ->pipe(MethodMiddleware::class)
     ->pipe(CsrfMiddleware::class)
     ->pipe(RouterMiddleware::class)
