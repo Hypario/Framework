@@ -4,7 +4,6 @@ namespace App\WelcomeModule;
 
 use Framework\ActionInterface;
 use Framework\Renderer\RendererInterface;
-use Framework\Session\FlashService;
 use Psr\Http\Message\ServerRequestInterface;
 
 class ExampleAction implements ActionInterface
@@ -14,15 +13,10 @@ class ExampleAction implements ActionInterface
      * @var RendererInterface
      */
     private $renderer;
-    /**
-     * @var FlashService
-     */
-    private $flash;
 
-    public function __construct(FlashService $flash, RendererInterface $renderer)
+    public function __construct(RendererInterface $renderer)
     {
         $this->renderer = $renderer;
-        $this->flash = $flash;
     }
 
     /**
