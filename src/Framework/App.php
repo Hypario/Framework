@@ -81,7 +81,6 @@ class App implements RequestHandlerInterface
         foreach($this->modules as $module) {
             $this->getContainer()->get($module);
         }
-
         $middleware = new CombinedMiddleware($this->getContainer(), $this->middlewares);
         return $middleware->process($request, $this);
     }
