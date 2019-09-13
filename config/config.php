@@ -3,6 +3,7 @@
 use Framework\Middlewares\CsrfMiddleware;
 use Framework\Renderer\{RendererInterface, TwigRendererFactory};
 use Framework\Session\{PHPSession, SessionInterface};
+use Framework\TwigExtensions\RouterTwigExtension;
 use Psr\Container\ContainerInterface;
 
 use function Hypario\{
@@ -18,6 +19,10 @@ return [
     'database.username' => 'root',
     'database.password' => 'root',
     'database.name' => 'framework',
+
+    'twig.extensions' => [
+        RouterTwigExtension::class
+    ],
 
     RendererInterface::class => factory(TwigRendererFactory::class),
 

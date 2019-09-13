@@ -11,7 +11,7 @@ interface RendererInterface
      * @param string $path
      * @param $namespace
      */
-    public function addPath(string $path, $namespace);
+    public function addPath(string $path, $namespace = null);
 
     /**
      * Allow to render a vue
