@@ -49,17 +49,10 @@ class CombinedMiddleware implements MiddlewareInterface, RequestHandlerInterface
         return $this->handle($request);
     }
 
-    /**
-     * Handles a request and produces a response.
-     *
-     * May call other collaborating code to generate the response.
-     */
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         $middleware = $this->getMiddleware();
-        if (is_null($middleware)) {
-            return $this->handler->handle($request);
-        } elseif (is_callable($middleware)) {
+        if (is_callable($middleware)) {
             $response = call_user_func_array($middleware, [$request, [$this, 'handle']]);
             if (is_string($response)) {
                 return new Response(200, [], $response);
@@ -72,6 +65,7 @@ class CombinedMiddleware implements MiddlewareInterface, RequestHandlerInterface
 
     /**
      * @return object
+     * @throws \Exception
      */
     private function getMiddleware()
     {
@@ -84,6 +78,6 @@ class CombinedMiddleware implements MiddlewareInterface, RequestHandlerInterface
             $this->index++;
             return $middleware;
         }
-        return null;
+        throw new \Exception("No middleware found.");
     }
 }

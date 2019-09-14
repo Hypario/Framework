@@ -10,7 +10,7 @@
     "psr-4": {
       "App\\": "src/",
       "Framework\\": "src/Framework",
-      "Test\\": "tests/"
+      "Tests\\": "tests/"
     }
   },
   "require": {

@@ -14,6 +14,9 @@ use Psr\Http\Server\RequestHandlerInterface;
 class App implements RequestHandlerInterface
 {
 
+    /**
+     * @var string|array|null
+     */
     private $definitions;
 
     /**
@@ -33,18 +36,27 @@ class App implements RequestHandlerInterface
      */
     private $middlewares = [];
 
-    public function __construct(string $definitions)
+    public function __construct($definitions = null)
     {
         $this->definitions = $definitions;
     }
 
-    public function addModule(string $module): self
+    /**
+     * @param string|Module $module
+     * @return App
+     */
+    public function addModule($module): self
     {
         $this->modules[] = $module;
         return $this;
     }
 
-    public function pipe(string $middleware, string $routePrefix = null): self
+    /**
+     * @param string|callable|MiddlewareInterface $middleware
+     * @param string|null $routePrefix
+     * @return App
+     */
+    public function pipe($middleware, ?string $routePrefix = null): self
     {
         if (is_null($routePrefix)) {
             $this->middlewares[] = $middleware;
@@ -57,7 +69,9 @@ class App implements RequestHandlerInterface
     public function getContainer(): ContainerInterface {
         if (is_null($this->container)) {
             $builder = new Builder();
-            $builder->addDefinitions($this->definitions);
+            if (!is_null($this->definitions)) {
+                $builder->addDefinitions($this->definitions);
+            }
             foreach ($this->getModules() as $module) {
                 if ($module::DEFINITIONS) {
                     $builder->addDefinitions($module::DEFINITIONS);
