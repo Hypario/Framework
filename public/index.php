@@ -4,6 +4,7 @@ use App\WelcomeModule\WelcomeModule;
 use Framework\App;
 use Framework\Middlewares\{CsrfMiddleware,
     DispatcherMiddleware,
+    ExceptionHandlerMiddleware,
     MethodMiddleware,
     RouterMiddleware,
     NotFoundMiddleware};
@@ -15,11 +16,18 @@ define('ROOT', dirname(__DIR__));
 
 require ROOT . '/vendor/autoload.php';
 
-$app = (new App(ROOT . '/config/config.php'))
-    ->addModule(WelcomeModule::class);
+$app = new App(ROOT . '/config/config.php');
+
+require ROOT . '/config/errors.php';
+
+$app->addModule(WelcomeModule::class);
 
 $app
-    ->pipe(Whoops::class)
+    ->pipe(
+        $app->getContainer()->get('env') === 'dev' ?
+            Whoops::class :
+            ExceptionHandlerMiddleware::class
+    )
     ->pipe(MethodMiddleware::class)
     ->pipe(CsrfMiddleware::class)
     ->pipe(RouterMiddleware::class)

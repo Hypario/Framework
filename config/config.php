@@ -30,10 +30,14 @@ return [
     CsrfMiddleware::class => object()->constructor(SessionInterface::class),
 
     PDO::class => function (ContainerInterface $c) {
-        return new PDO("mysql:host={$c->get('database.host')};dbname={$c->get('database.name')};charset=utf-8",
+        return new PDO("mysql:host={$c->get('database.host')};dbname={$c->get('database.name')};charset=UTF8",
             $c->get('database.username'),
-            $c->get('database.password')
+            $c->get('database.password'),
+            [
+                PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_OBJ,
+                PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
+            ]
         );
-    }
+    },
 
 ];

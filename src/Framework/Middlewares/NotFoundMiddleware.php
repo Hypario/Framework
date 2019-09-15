@@ -2,6 +2,7 @@
 
 namespace Framework\Middlewares;
 
+use Framework\Exception\KnownException;
 use GuzzleHttp\Psr7\Response;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -19,6 +20,6 @@ class NotFoundMiddleware implements MiddlewareInterface
      */
     public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
     {
-        return new Response(404, [], '<h1>Erreur 404</h1>');
+        throw new KnownException(NOT_FOUND);
     }
 }

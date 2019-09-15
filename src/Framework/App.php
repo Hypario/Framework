@@ -3,8 +3,10 @@
 namespace Framework;
 
 use Framework\Middlewares\CombinedMiddleware;
+use Framework\Middlewares\ExceptionHandlerMiddleware;
 use Framework\Middlewares\RoutePrefixedMiddleware;
 use Hypario\Builder;
+use Middlewares\Whoops;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
@@ -66,7 +68,8 @@ class App implements RequestHandlerInterface
         return $this;
     }
 
-    public function getContainer(): ContainerInterface {
+    public function getContainer(): ContainerInterface
+    {
         if (is_null($this->container)) {
             $builder = new Builder();
             if (!is_null($this->definitions)) {
@@ -92,7 +95,7 @@ class App implements RequestHandlerInterface
     public function handle(ServerRequestInterface $request): ResponseInterface
     {
         // instantiate all the modules
-        foreach($this->modules as $module) {
+        foreach ($this->modules as $module) {
             $this->getContainer()->get($module);
         }
         $middleware = new CombinedMiddleware($this->getContainer(), $this->middlewares);

@@ -59,7 +59,8 @@ class CombinedMiddleware implements MiddlewareInterface, RequestHandlerInterface
             }
             return $response;
         } elseif ($middleware instanceof MiddlewareInterface) {
-            return $middleware->process($request, $this);
+            $response = $middleware->process($request, $this);
+            return $response;
         }
     }
 
