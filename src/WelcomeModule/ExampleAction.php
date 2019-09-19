@@ -13,15 +13,10 @@ class ExampleAction implements ActionInterface
      * @var RendererInterface
      */
     private $renderer;
-    /**
-     * @var \PDO
-     */
-    private $PDO;
 
-    public function __construct(RendererInterface $renderer, \PDO $PDO)
+    public function __construct(RendererInterface $renderer)
     {
         $this->renderer = $renderer;
-        $this->PDO = $PDO;
     }
 
     /**
