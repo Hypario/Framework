@@ -18,7 +18,8 @@ return [
     'database.host' => 'localhost',
     'database.username' => 'root',
     'database.password' => 'root',
-    'database.name' => 'framework',
+    'database.name' => 'root',
+    'database.schema' => 'Framework',
 
     'twig.extensions' => [
         RouterTwigExtension::class
@@ -30,7 +31,7 @@ return [
     CsrfMiddleware::class => object()->constructor(SessionInterface::class),
 
     PDO::class => function (ContainerInterface $c) {
-        return new PDO("mysql:host={$c->get('database.host')};dbname={$c->get('database.name')};charset=UTF8",
+        $pdo = new PDO("pgsql:host={$c->get('database.host')};dbname={$c->get('database.name')};options='--client_encoding=UTF8'",
             $c->get('database.username'),
             $c->get('database.password'),
             [
@@ -38,6 +39,8 @@ return [
                 PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION
             ]
         );
+        $pdo->exec("SET search_path TO {$c->get('database.schema')}");
+        return $pdo;
     },
 
 ];
