@@ -20,7 +20,7 @@ return [
         'migrations' => $migrations,
         'seeds' => $seeds
     ],
-    'environment' => [
+    'environments' => [
         'default_database' => 'development',
         'development' => [
             'adapter' => 'mysql',
