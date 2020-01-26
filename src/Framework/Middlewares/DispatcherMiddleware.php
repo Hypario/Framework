@@ -2,8 +2,7 @@
 
 namespace Framework\Middlewares;
 
-use GuzzleHttp\Psr7\Response;
-use Hypario\Route;
+use Hypario\Router\Route;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
