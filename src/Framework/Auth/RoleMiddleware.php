@@ -1,11 +1,9 @@
 <?php
 
 
-namespace App\Framework\Auth;
+namespace Framework\Auth;
 
 
-use Framework\Auth\Auth;
-use Framework\Auth\ForbiddenException;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\MiddlewareInterface;
