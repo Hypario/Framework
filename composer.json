@@ -21,7 +21,8 @@
     "twig/twig": "^2.11",
     "hypario/container": "^1.0",
     "ext-pdo": "*",
-    "middlewares/whoops": "^1.2"
+    "middlewares/whoops": "^1.2",
+    "php": ">=7.4.0"
   },
   "require-dev": {
     "robmorgan/phinx": "^0.11.1",

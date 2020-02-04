@@ -2,11 +2,11 @@
 
 namespace App\WelcomeModule;
 
-use Framework\ActionInterface;
+use Framework\Action;
 use Framework\Renderer\RendererInterface;
 use Psr\Http\Message\ServerRequestInterface;
 
-class ExampleAction implements ActionInterface
+class ExampleAction extends Action
 {
 
     /**
@@ -26,5 +26,13 @@ class ExampleAction implements ActionInterface
     public function __invoke(ServerRequestInterface $request)
     {
         return $this->renderer->render('@welcome/index');
+    }
+
+    /**
+     * @inheritDoc
+     */
+    public function getParams(ServerRequestInterface $request): array
+    {
+        return [];
     }
 }
