@@ -18,8 +18,6 @@ require ROOT . '/vendor/autoload.php';
 
 $app = new App(ROOT . '/config/config.php');
 
-require ROOT . '/config/errors.php';
-
 $app->addModule(WelcomeModule::class);
 
 $app
@@ -33,6 +31,8 @@ $app
     ->pipe(RouterMiddleware::class)
     ->pipe(DispatcherMiddleware::class)
     ->pipe(NotFoundMiddleware::class);
+
+require ROOT . '/config/errors.php';
 
 if (php_sapi_name() !== 'cli') {
     $response = $app->handle(ServerRequest::fromGlobals());

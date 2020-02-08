@@ -2,6 +2,8 @@
 
 namespace Framework\Database;
 
+use Framework\Exception\NoRecordException;
+
 class Table
 {
 
