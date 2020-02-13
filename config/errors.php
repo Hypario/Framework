@@ -4,8 +4,12 @@ use Framework\Exception\KnownExceptionResolver;
 
 $resolver = $app->getContainer()->get(KnownExceptionResolver::class);
 
-define('ERROR_DEFAULT', -1);
+define('SERVER_ERROR', 500);
 define('NOT_FOUND', 404);
+define('ERROR_REQUEST', 400);
+define('UNKNOWN_ERROR', 520);
 
-$resolver->register(ERROR_DEFAULT, "Une erreur inattendu c'est produite, contacter le webmaster si le problème persiste.");
+
+$resolver->register(SERVER_ERROR, "Internal Server Error");
+$resolver->register(UNKNOWN_ERROR, "An unknown error happened, please contact the webmaster if it persist.");
 $resolver->register(NOT_FOUND, "404 Not Found.");

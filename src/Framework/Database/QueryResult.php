@@ -35,6 +35,15 @@ class QueryResult implements \ArrayAccess, \Iterator
         return $this->entity;
     }
 
+    public function getAll(): array
+    {
+        $results = [];
+        foreach (array_keys($this->records) as $index) {
+            $results[] = $this->get($index);
+        }
+        return $results;
+    }
+
     /**
      * Return the current element
      * @link http://php.net/manual/en/iterator.current.php
