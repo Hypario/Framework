@@ -26,7 +26,6 @@ return [
         RouterTwigExtension::class,
         FlashExtension::class,
         FormExtension::class,
-        AuthTwigExtension::class,
         ModuleExtension::class
     ],
 
