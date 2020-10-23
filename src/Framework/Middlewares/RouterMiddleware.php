@@ -2,7 +2,7 @@
 
 namespace Framework\Middlewares;
 
-use Hypario\Router;
+use Hypario\Router\Router;
 use Psr\Http\Server\MiddlewareInterface;
 
 class RouterMiddleware implements MiddlewareInterface

@@ -2,7 +2,7 @@
 
 namespace Framework\TwigExtensions;
 
-use Hypario\Router;
+use Hypario\Router\Router;
 use Twig\Extension\AbstractExtension;
 use Twig\TwigFunction;
 

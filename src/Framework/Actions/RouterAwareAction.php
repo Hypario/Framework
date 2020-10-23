@@ -2,8 +2,7 @@
 
 namespace Framework\Actions;
 
-use GuzzleHttp\Psr7\Response;
-use Hypario\Router\Router;
+use App\Framework\Response\RedirectResponse;
 use Psr\Http\Message\ResponseInterface;
 
 /**
@@ -14,18 +13,17 @@ use Psr\Http\Message\ResponseInterface;
  */
 trait RouterAwareAction
 {
+
     /**
      * Renvoie une réponse de redirection
      *
-     * @param string $path
+     * @param string $name name of the route
      * @param array $params
      * @return ResponseInterface
      */
-    public function redirect(string $path, array $params = []): ResponseInterface
+    public function redirect(string $name, array $params = []): ResponseInterface
     {
-        $redirectUri = $this->router->getPath($path, $params);
-        return (new Response())
-            ->withStatus(301)
-            ->withHeader('Location', $redirectUri);
+        $redirectUri = $this->router->getPath($name, $params);
+        return new RedirectResponse($redirectUri);
     }
 }

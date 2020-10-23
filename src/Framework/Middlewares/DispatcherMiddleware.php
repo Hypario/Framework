@@ -2,7 +2,7 @@
 
 namespace Framework\Middlewares;
 
-use Hypario\Route;
+use Hypario\Router\Route;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;

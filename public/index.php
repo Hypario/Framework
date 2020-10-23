@@ -8,9 +8,9 @@ use Framework\Middlewares\{CsrfMiddleware,
     MethodMiddleware,
     RouterMiddleware,
     NotFoundMiddleware};
+use Franzl\Middleware\Whoops\WhoopsMiddleware;
 use GuzzleHttp\Psr7\ServerRequest;
 use function Http\Response\send;
-use Middlewares\Whoops;
 
 define('ROOT', dirname(__DIR__));
 
@@ -23,7 +23,7 @@ $app->addModule(WelcomeModule::class);
 $app
     ->pipe(
         $app->getContainer()->get('env') === 'dev' ?
-            Whoops::class :
+            WhoopsMiddleware::class :
             ExceptionHandlerMiddleware::class
     )
     ->pipe(MethodMiddleware::class)

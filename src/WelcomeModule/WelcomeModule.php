@@ -4,7 +4,7 @@ namespace App\WelcomeModule;
 
 use Framework\Module;
 use Framework\Renderer\RendererInterface;
-use Hypario\Router;
+use Hypario\Router\Router;
 
 class WelcomeModule extends Module
 {

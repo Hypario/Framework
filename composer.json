@@ -21,9 +21,9 @@
     "twig/twig": "^2.11",
     "hypario/container": "^1.0",
     "ext-pdo": "*",
-    "middlewares/whoops": "^1.2",
     "php": ">=7.4.0",
-    "swiftmailer/swiftmailer": "^6.2"
+    "swiftmailer/swiftmailer": "^6.2",
+    "franzl/whoops-middleware": "^1.2"
   },
   "require-dev": {
     "robmorgan/phinx": "^0.11.1",
