@@ -4,7 +4,7 @@ use Framework\Database\DatabaseFactory;
 use Framework\Middlewares\CsrfMiddleware;
 use Framework\Renderer\{RendererInterface, TwigRendererFactory};
 use Framework\Session\{PHPSession, SessionInterface};
-use Framework\TwigExtensions\RouterTwigExtension;
+use Framework\TwigExtensions\{FlashExtension, ModuleExtension, RouterTwigExtension, FormExtension};
 use Psr\Container\ContainerInterface;
 
 use function Hypario\{
@@ -23,7 +23,11 @@ return [
     'database.schema' => 'Framework',
 
     'twig.extensions' => [
-        RouterTwigExtension::class
+        RouterTwigExtension::class,
+        FlashExtension::class,
+        FormExtension::class,
+        AuthTwigExtension::class,
+        ModuleExtension::class
     ],
 
     RendererInterface::class => factory(TwigRendererFactory::class),
