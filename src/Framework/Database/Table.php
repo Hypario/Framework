@@ -42,11 +42,22 @@ class Table
 
     /**
      * Find all the records
-     * @return Query
+     * @return QueryResult
      */
-    public function findAll(): Query
+    public function findAll(): QueryResult
     {
-        return $this->makeQuery();
+        return $this->makeQuery()->fetchAll();
+    }
+
+    /**
+     * Find a record with a given field and parameter value
+     * @param string $field
+     * @param string $value
+     * @return bool|mixed
+     */
+    public function findBy(string $field, string $value)
+    {
+        return $this->makeQuery()->where("$field = :field")->params(["field" => $value])->fetch();
     }
 
     /**
@@ -56,7 +67,7 @@ class Table
      * @return bool|mixed
      * @throws NoRecordException
      */
-    public function findBy(string $field, string $value)
+    public function findByOrFail(string $field, string $value)
     {
         return $this->makeQuery()->where("$field = :field")->params(["field" => $value])->fetchOrFail();
     }
@@ -81,9 +92,19 @@ class Table
      * Find a record using the id
      * @param int $id
      * @return bool|mixed
-     * @throws NoRecordException
      */
     public function find(int $id)
+    {
+        return $this->makeQuery()->where("id = $id")->fetch();
+    }
+
+    /**
+     * Find a record using the id
+     * @param int $id
+     * @return bool|mixed
+     * @throws NoRecordException
+     */
+    public function findOrFail(int $id)
     {
         return $this->makeQuery()->where("id = $id")->fetchOrFail();
     }

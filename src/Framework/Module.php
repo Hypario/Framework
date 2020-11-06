@@ -12,6 +12,12 @@ class Module
     public const DEFINITIONS = null;
 
     /**
+     * Path to the errors definitions for the error resolver
+     * @var string
+     */
+    public const ERRORS = null;
+
+    /**
      * Path to the migrations for Phinx
      * @var string
      */

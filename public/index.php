@@ -33,6 +33,9 @@ $app
     ->pipe(NotFoundMiddleware::class);
 
 require ROOT . '/config/errors.php';
+foreach ($app->getModules() as $module) {
+    if ($module::ERRORS) require $module::ERRORS;
+}
 
 if (php_sapi_name() !== 'cli') {
     $response = $app->handle(ServerRequest::fromGlobals());
