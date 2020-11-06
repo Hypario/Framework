@@ -3,10 +3,8 @@
 namespace Framework;
 
 use Framework\Middlewares\CombinedMiddleware;
-use Framework\Middlewares\ExceptionHandlerMiddleware;
 use Framework\Middlewares\RoutePrefixedMiddleware;
 use Hypario\Builder;
-use Middlewares\Whoops;
 use Psr\Container\ContainerInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\ServerRequestInterface;
