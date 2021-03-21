@@ -21,7 +21,7 @@
     "twig/twig": "^2.11",
     "hypario/container": "^1.0",
     "ext-pdo": "*",
-    "php": ">=7.4.0",
+    "php": ">=8.0",
     "swiftmailer/swiftmailer": "^6.2",
     "franzl/whoops-middleware": "^1.2"
   },

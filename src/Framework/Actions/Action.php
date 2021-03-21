@@ -21,7 +21,7 @@ abstract class Action
      * @return ResponseInterface|string
      * @throws KnownException
      */
-    public abstract function __invoke(ServerRequestInterface $request);
+    public abstract function __invoke(ServerRequestInterface $request): ResponseInterface|String;
 
     /**
      * Filter the params
