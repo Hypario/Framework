@@ -19,7 +19,7 @@
     "hypario/router": "^1.7.0",
     "psr/http-server-middleware": "^1.0",
     "twig/twig": "^2.11",
-    "hypario/container": "^1.0",
+    "hypario/container": "^1.1",
     "ext-pdo": "*",
     "php": ">=8.0",
     "swiftmailer/swiftmailer": "^6.2",
