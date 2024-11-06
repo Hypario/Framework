@@ -18,7 +18,7 @@
     "guzzlehttp/psr7": "^1.6",
     "hypario/router": "^1.7.0",
     "psr/http-server-middleware": "^1.0",
-    "twig/twig": "^2.11",
+    "twig/twig": "^3.11",
     "hypario/container": "^1.1",
     "ext-pdo": "*",
     "php": ">=8.0",
